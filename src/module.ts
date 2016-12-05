@@ -165,7 +165,7 @@ export const encode = (event) => {
 
         const sysexLengthArrayBuffer = writeVariableLengthQuantity(sysexLength);
 
-        const { arrayBuffer: sysexArrayBuffer, dataView: sysexDataView } = createArrayBufferWithDataView(1);
+        const { arrayBuffer: sysexArrayBuffer, dataView: sysexDataView } = createArrayBufferWithDataView(sysexLength);
 
         for (let i = 0; i < event.sysex.length; i += 2) {
             sysexDataView.setUint8(i / 2, parseInt(event.sysex.slice(i, i + 2), 16));
