@@ -40,9 +40,9 @@
     "src/"
   ],
   "homepage": "https://github.com/chrisguttandin/json-midi-message-encoder",
-  "jsnext:main": "build/es2015/module.js",
   "license": "MIT",
   "main": "build/es5/bundle.js",
+  "module": "build/es2015/module.js",
   "name": "json-midi-message-encoder",
   "repository": {
     "type": "git",
