@@ -1,3 +1,18 @@
+import { TMidiEvent } from 'midi-json-parser-worker';
+import { isIMidiChannelPrefixEvent } from './guards/midi-channel-prefix-event';
+import { isIMidiControlChangeEvent } from './guards/midi-control-change-event';
+import { isIMidiEndOfTrackEvent } from './guards/midi-end-of-track-event';
+import { isIMidiKeySignatureEvent } from './guards/midi-key-signature-event';
+import { isIMidiSetTempoEvent } from './guards/midi-set-tempo-event';
+import { isIMidiMidiPortEvent } from './guards/midi-midi-port-event';
+import { isIMidiNoteOffEvent } from './guards/midi-note-off-event';
+import { isIMidiNoteOnEvent } from './guards/midi-note-on-event';
+import { isIMidiPitchBendEvent } from './guards/midi-pitch-bend-event';
+import { isIMidiProgramChangeEvent } from './guards/midi-prorgam-change-event';
+import { isIMidiSmpteOffsetEvent } from './guards/midi-smpte-offset-event';
+import { isIMidiSysexEvent } from './guards/midi-sysex-event';
+import { isIMidiTimeSignatureEvent } from './guards/midi-time-signature-event';
+import { isIMidiTrackNameEvent } from './guards/midi-track-name-event';
 import { createArrayBufferWithDataView } from './helper/create-array-buffer-with-data-view';
 import { joinArrayBuffers } from './helper/join-array-buffers';
 import { writeVariableLengthQuantity } from './helper/write-variable-length-quantity';
@@ -9,8 +24,8 @@ declare class TextEncoder {
 
 }
 
-export const encode = (event) => {
-    if ('channelPrefix' in event) {
+export const encode = (event: TMidiEvent) => {
+    if (isIMidiChannelPrefixEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(4);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -23,7 +38,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('controlChange' in event) {
+    if (isIMidiControlChangeEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
         dataView.setUint8(0, 0xB0 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
@@ -33,7 +48,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('endOfTrack' in event) {
+    if (isIMidiEndOfTrackEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -45,7 +60,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('keySignature' in event) {
+    if (isIMidiKeySignatureEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(5);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -59,7 +74,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('midiPort' in event) {
+    if (isIMidiMidiPortEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(4);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -72,7 +87,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('noteOff' in event) {
+    if (isIMidiNoteOffEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
         dataView.setUint8(0, 0x80 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
@@ -82,7 +97,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('noteOn' in event) {
+    if (isIMidiNoteOnEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
         dataView.setUint8(0, 0x90 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
@@ -92,7 +107,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('pitchBend' in event) {
+    if (isIMidiPitchBendEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
         dataView.setUint8(0, 0xE0 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
@@ -102,7 +117,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('programChange' in event) {
+    if (isIMidiProgramChangeEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
 
         dataView.setUint8(0, 0xC0 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
@@ -111,7 +126,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('setTempo' in event) {
+    if (isIMidiSetTempoEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(6);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -126,7 +141,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('smpteOffset' in event) {
+    if (isIMidiSmpteOffsetEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(8);
 
         let frameRateByte;
@@ -139,6 +154,8 @@ export const encode = (event) => {
             frameRateByte = 0x40;
         } else if (event.smpteOffset.frameRate === 30) {
             frameRateByte = 0x60;
+        } else {
+            throw new Error(); // @todo
         }
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -155,7 +172,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('sysex' in event) {
+    if (isIMidiSysexEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(1);
 
         // Write an eventTypeByte with a value of 0xF0.
@@ -174,7 +191,7 @@ export const encode = (event) => {
         return joinArrayBuffers([ arrayBuffer, sysexLengthArrayBuffer, sysexArrayBuffer ]);
     }
 
-    if ('timeSignature' in event) {
+    if (isIMidiTimeSignatureEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(7);
 
         let denominator = event.timeSignature.denominator;
@@ -199,7 +216,7 @@ export const encode = (event) => {
         return arrayBuffer;
     }
 
-    if ('trackName' in event) {
+    if (isIMidiTrackNameEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -216,5 +233,5 @@ export const encode = (event) => {
         return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
     }
 
-    throw new Error(`Unencodable event with a delta of "${ event.delta }".`);
+    throw new Error(`Unencodable event with a delta of "${ (<any> event).delta }".`);
 };

@@ -1,4 +1,4 @@
-export const createArrayBufferWithDataView = (length) => {
+export const createArrayBufferWithDataView = (length: number) => {
     const arrayBuffer = new ArrayBuffer(length);
     const dataView = new DataView(arrayBuffer);
 
