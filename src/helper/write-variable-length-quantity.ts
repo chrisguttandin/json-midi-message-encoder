@@ -7,13 +7,15 @@ export const writeVariableLengthQuantity = (value: number) => {
 
     const length = numberOfBytes - 1;
 
-    for (let i = 0; i < length; i += 1) {
-        dataView.setUint8(i, (value >> 7) | 0x80); // tslint:disable-line:no-bitwise
+    let shiftedValue = value;
 
-        value &= 0x7F; // tslint:disable-line:no-bitwise
+    for (let i = 0; i < length; i += 1) {
+        dataView.setUint8(i, (shiftedValue >> 7) | 0x80); // tslint:disable-line:no-bitwise
+
+        shiftedValue &= 0x7F; // tslint:disable-line:no-bitwise
     }
 
-    dataView.setUint8(numberOfBytes - 1, value);
+    dataView.setUint8(numberOfBytes - 1, shiftedValue);
 
     return arrayBuffer;
 };
