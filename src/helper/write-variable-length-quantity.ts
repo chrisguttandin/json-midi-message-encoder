@@ -1,4 +1,4 @@
-import { createArrayBufferWithDataView } from './create-array-buffer-with-data-view';
+import { createArrayBufferWithDataView } from './create-array-buffer-with-data-view';
 
 export const writeVariableLengthQuantity = (value: number) => {
     const numberOfBytes = Math.max(1, Math.floor((Math.log(value) / Math.log(2)) / 7) + 1);
