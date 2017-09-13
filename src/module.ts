@@ -1,4 +1,4 @@
-import { TMidiEvent } from 'midi-json-parser-worker';
+import { TMidiEvent } from 'midi-json-parser-worker';
 import { isIMidiChannelPrefixEvent } from './guards/midi-channel-prefix-event';
 import { isIMidiControlChangeEvent } from './guards/midi-control-change-event';
 import { isIMidiEndOfTrackEvent } from './guards/midi-end-of-track-event';
@@ -9,13 +9,13 @@ import { isIMidiNoteOffEvent } from './guards/midi-note-off-event';
 import { isIMidiNoteOnEvent } from './guards/midi-note-on-event';
 import { isIMidiPitchBendEvent } from './guards/midi-pitch-bend-event';
 import { isIMidiProgramChangeEvent } from './guards/midi-prorgam-change-event';
-import { isIMidiSmpteOffsetEvent } from './guards/midi-smpte-offset-event';
+import { isIMidiSmpteOffsetEvent } from './guards/midi-smpte-offset-event';
 import { isIMidiSysexEvent } from './guards/midi-sysex-event';
 import { isIMidiTimeSignatureEvent } from './guards/midi-time-signature-event';
 import { isIMidiTrackNameEvent } from './guards/midi-track-name-event';
 import { createArrayBufferWithDataView } from './helper/create-array-buffer-with-data-view';
-import { joinArrayBuffers } from './helper/join-array-buffers';
-import { writeVariableLengthQuantity } from './helper/write-variable-length-quantity';
+import { joinArrayBuffers } from './helper/join-array-buffers';
+import { writeVariableLengthQuantity } from './helper/write-variable-length-quantity';
 
 // @todo Remove this declaration again when TypeScript is aware of the TextEncoder.
 declare class TextEncoder {
