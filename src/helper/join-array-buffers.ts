@@ -1,4 +1,4 @@
-export const joinArrayBuffers = (arrayBuffers: ArrayBuffer[]) => {
+export const joinArrayBuffers = (arrayBuffers: (ArrayBuffer | SharedArrayBuffer)[]) => {
     const byteLength = arrayBuffers.reduce((bytLngth, arrayBuffer) => bytLngth + arrayBuffer.byteLength, 0);
 
     const [ , uint8Array ] = arrayBuffers.reduce<[ number, Uint8Array ]>(([ offset, nt8Rry ], arrayBuffer) => {
