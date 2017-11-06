@@ -226,7 +226,7 @@ export const encode = (event: TMidiEvent) => {
 
         const textEncoder = new TextEncoder();
 
-        const textArrayBuffer = textEncoder.encode(event.trackName).buffer;
+        const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event.trackName).buffer;
 
         const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
 
