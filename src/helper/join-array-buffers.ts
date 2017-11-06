@@ -7,5 +7,5 @@ export const joinArrayBuffers = (arrayBuffers: ArrayBuffer[]) => {
         return [ offset + arrayBuffer.byteLength, nt8Rry ];
     }, [ 0, new Uint8Array(byteLength) ]);
 
-    return uint8Array.buffer;
+    return <ArrayBuffer> uint8Array.buffer;
 };
