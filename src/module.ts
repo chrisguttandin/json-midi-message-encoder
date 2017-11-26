@@ -3,6 +3,7 @@ import { isIMidiChannelPrefixEvent } from './guards/midi-channel-prefix-event';
 import { isIMidiControlChangeEvent } from './guards/midi-control-change-event';
 import { isIMidiEndOfTrackEvent } from './guards/midi-end-of-track-event';
 import { isIMidiKeySignatureEvent } from './guards/midi-key-signature-event';
+import { isIMidiLyricEvent } from './guards/midi-lyric-event';
 import { isIMidiSetTempoEvent } from './guards/midi-set-tempo-event';
 import { isIMidiMidiPortEvent } from './guards/midi-midi-port-event';
 import { isIMidiNoteOffEvent } from './guards/midi-note-off-event';
@@ -72,6 +73,23 @@ export const encode = (event: TMidiEvent) => {
         dataView.setUint8(4, event.keySignature.scale);
 
         return arrayBuffer;
+    }
+
+    if (isIMidiLyricEvent(event)) {
+        const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
+
+        // Write an eventTypeByte with a value of 0xFF.
+        dataView.setUint8(0, 0xFF);
+        // Write a metaTypeByte with a value of 0x05.
+        dataView.setUint8(1, 0x05);
+
+        const textEncoder = new TextEncoder();
+
+        const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event.lyric).buffer;
+
+        const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
+
+        return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
     }
 
     if (isIMidiMidiPortEvent(event)) {
