@@ -93,6 +93,12 @@ describe('module', () => {
             expect(arrayfy(arrayBuffer)).to.deep.equal([ 240, 5, 126, 127, 9, 1, 247 ]);
         });
 
+        it('should encode a text event', () => {
+            const arrayBuffer = encode({ text: 'a fake text' });
+
+            expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 1, 11, 97, 32, 102, 97, 107, 101, 32, 116, 101, 120, 116 ]);
+        });
+
         it('should encode a time signature event', () => {
             const arrayBuffer = encode({
                 timeSignature: {

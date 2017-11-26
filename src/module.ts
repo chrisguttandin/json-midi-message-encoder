@@ -13,6 +13,7 @@ import { isIMidiProgramChangeEvent } from './guards/midi-prorgam-change-event';
 import { isIMidiSmpteOffsetEvent } from './guards/midi-smpte-offset-event';
 import { isIMidiSysexEvent } from './guards/midi-sysex-event';
 import { isIMidiTimeSignatureEvent } from './guards/midi-time-signature-event';
+import { isIMidiTextEvent } from './guards/midi-text-event';
 import { isIMidiTrackNameEvent } from './guards/midi-track-name-event';
 import { createArrayBufferWithDataView } from './helper/create-array-buffer-with-data-view';
 import { joinArrayBuffers } from './helper/join-array-buffers';
@@ -232,6 +233,23 @@ export const encode = (event: TMidiEvent) => {
         dataView.setUint8(6, event.timeSignature.thirtyseconds);
 
         return arrayBuffer;
+    }
+
+    if (isIMidiTextEvent(event)) {
+        const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
+
+        // Write an eventTypeByte with a value of 0xFF.
+        dataView.setUint8(0, 0xFF);
+        // Write a metaTypeByte with a value of 0x01.
+        dataView.setUint8(1, 0x01);
+
+        const textEncoder = new TextEncoder();
+
+        const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event.text).buffer;
+
+        const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
+
+        return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
     }
 
     if (isIMidiTrackNameEvent(event)) {
