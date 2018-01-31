@@ -7,7 +7,7 @@
     "babel-runtime": "^6.26.0",
     "midi-json-parser-worker": "^4.0.7",
     "tslib": "^1.9.0",
-    "typescript": "^2.6.2"
+    "typescript": "^2.7.1"
   },
   "description": "This module encodes a JSON representation of a MIDI event into a binary MIDI event.",
   "devDependencies": {
