@@ -3,6 +3,11 @@
   "bugs": {
     "url": "https://github.com/chrisguttandin/json-midi-message-encoder/issues"
   },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "midi-json-parser-worker": "^4.0.10",
@@ -49,8 +54,8 @@
     "webpack": "^4.1.0"
   },
   "files": [
-    "build/es5/",
     "build/es2015/",
+    "build/es5/",
     "build/esm/",
     "src/"
   ],
