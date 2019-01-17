@@ -19,13 +19,6 @@ import { createArrayBufferWithDataView } from './helper/create-array-buffer-with
 import { joinArrayBuffers } from './helper/join-array-buffers';
 import { writeVariableLengthQuantity } from './helper/write-variable-length-quantity';
 
-// @todo Remove this declaration again when TypeScript is aware of the TextEncoder.
-declare class TextEncoder {
-
-    public encode (input: string): Uint8Array;
-
-}
-
 export const encode = (event: TMidiEvent) => {
     if (isIMidiChannelPrefixEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(4);
