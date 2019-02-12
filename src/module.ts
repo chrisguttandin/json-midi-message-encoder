@@ -1,26 +1,26 @@
 import { TMidiEvent } from 'midi-json-parser-worker';
-import { isIMidiChannelPrefixEvent } from './guards/midi-channel-prefix-event';
-import { isIMidiControlChangeEvent } from './guards/midi-control-change-event';
-import { isIMidiEndOfTrackEvent } from './guards/midi-end-of-track-event';
-import { isIMidiKeySignatureEvent } from './guards/midi-key-signature-event';
-import { isIMidiLyricEvent } from './guards/midi-lyric-event';
-import { isIMidiMidiPortEvent } from './guards/midi-midi-port-event';
-import { isIMidiNoteOffEvent } from './guards/midi-note-off-event';
-import { isIMidiNoteOnEvent } from './guards/midi-note-on-event';
-import { isIMidiPitchBendEvent } from './guards/midi-pitch-bend-event';
-import { isIMidiProgramChangeEvent } from './guards/midi-prorgam-change-event';
-import { isIMidiSetTempoEvent } from './guards/midi-set-tempo-event';
-import { isIMidiSmpteOffsetEvent } from './guards/midi-smpte-offset-event';
-import { isIMidiSysexEvent } from './guards/midi-sysex-event';
-import { isIMidiTextEvent } from './guards/midi-text-event';
-import { isIMidiTimeSignatureEvent } from './guards/midi-time-signature-event';
-import { isIMidiTrackNameEvent } from './guards/midi-track-name-event';
+import { isMidiChannelPrefixEvent } from './guards/midi-channel-prefix-event';
+import { isMidiControlChangeEvent } from './guards/midi-control-change-event';
+import { isMidiEndOfTrackEvent } from './guards/midi-end-of-track-event';
+import { isMidiKeySignatureEvent } from './guards/midi-key-signature-event';
+import { isMidiLyricEvent } from './guards/midi-lyric-event';
+import { isMidiMidiPortEvent } from './guards/midi-midi-port-event';
+import { isMidiNoteOffEvent } from './guards/midi-note-off-event';
+import { isMidiNoteOnEvent } from './guards/midi-note-on-event';
+import { isMidiPitchBendEvent } from './guards/midi-pitch-bend-event';
+import { isMidiProgramChangeEvent } from './guards/midi-prorgam-change-event';
+import { isMidiSetTempoEvent } from './guards/midi-set-tempo-event';
+import { isMidiSmpteOffsetEvent } from './guards/midi-smpte-offset-event';
+import { isMidiSysexEvent } from './guards/midi-sysex-event';
+import { isMidiTextEvent } from './guards/midi-text-event';
+import { isMidiTimeSignatureEvent } from './guards/midi-time-signature-event';
+import { isMidiTrackNameEvent } from './guards/midi-track-name-event';
 import { createArrayBufferWithDataView } from './helper/create-array-buffer-with-data-view';
 import { joinArrayBuffers } from './helper/join-array-buffers';
 import { writeVariableLengthQuantity } from './helper/write-variable-length-quantity';
 
 export const encode = (event: TMidiEvent) => {
-    if (isIMidiChannelPrefixEvent(event)) {
+    if (isMidiChannelPrefixEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(4);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -33,7 +33,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiControlChangeEvent(event)) {
+    if (isMidiControlChangeEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
         dataView.setUint8(0, 0xB0 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
@@ -43,7 +43,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiEndOfTrackEvent(event)) {
+    if (isMidiEndOfTrackEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -55,7 +55,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiKeySignatureEvent(event)) {
+    if (isMidiKeySignatureEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(5);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -69,7 +69,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiLyricEvent(event)) {
+    if (isMidiLyricEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -86,7 +86,7 @@ export const encode = (event: TMidiEvent) => {
         return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
     }
 
-    if (isIMidiMidiPortEvent(event)) {
+    if (isMidiMidiPortEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(4);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -99,7 +99,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiNoteOffEvent(event)) {
+    if (isMidiNoteOffEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
         dataView.setUint8(0, 0x80 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
@@ -109,7 +109,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiNoteOnEvent(event)) {
+    if (isMidiNoteOnEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
         dataView.setUint8(0, 0x90 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
@@ -119,7 +119,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiPitchBendEvent(event)) {
+    if (isMidiPitchBendEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
         dataView.setUint8(0, 0xE0 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
@@ -129,7 +129,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiProgramChangeEvent(event)) {
+    if (isMidiProgramChangeEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
 
         dataView.setUint8(0, 0xC0 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
@@ -138,7 +138,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiSetTempoEvent(event)) {
+    if (isMidiSetTempoEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(6);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -153,7 +153,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiSmpteOffsetEvent(event)) {
+    if (isMidiSmpteOffsetEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(8);
 
         let frameRateByte;
@@ -184,7 +184,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiSysexEvent(event)) {
+    if (isMidiSysexEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(1);
 
         // Write an eventTypeByte with a value of 0xF0.
@@ -203,7 +203,7 @@ export const encode = (event: TMidiEvent) => {
         return joinArrayBuffers([ arrayBuffer, sysexLengthArrayBuffer, sysexArrayBuffer ]);
     }
 
-    if (isIMidiTimeSignatureEvent(event)) {
+    if (isMidiTimeSignatureEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(7);
 
         let denominator = event.timeSignature.denominator;
@@ -228,7 +228,7 @@ export const encode = (event: TMidiEvent) => {
         return arrayBuffer;
     }
 
-    if (isIMidiTextEvent(event)) {
+    if (isMidiTextEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
 
         // Write an eventTypeByte with a value of 0xFF.
@@ -245,7 +245,7 @@ export const encode = (event: TMidiEvent) => {
         return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
     }
 
-    if (isIMidiTrackNameEvent(event)) {
+    if (isMidiTrackNameEvent(event)) {
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
 
         // Write an eventTypeByte with a value of 0xFF.
