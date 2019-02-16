@@ -1,4 +1,6 @@
-export const joinArrayBuffers = (arrayBuffers: ArrayBuffer[]) => {
+import { TJoinArrayBuffersFunction } from '../types';
+
+export const joinArrayBuffers: TJoinArrayBuffersFunction = (arrayBuffers) => {
     const byteLength = arrayBuffers.reduce((bytLngth, arrayBuffer) => bytLngth + arrayBuffer.byteLength, 0);
 
     const [ , uint8Array ] = arrayBuffers.reduce<[ number, Uint8Array ]>(([ offset, nt8Rry ], arrayBuffer) => {
