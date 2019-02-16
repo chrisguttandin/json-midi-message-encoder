@@ -6,17 +6,11 @@ export const createWriteVariableLengthQuantity: TWriteVariableLengthQuantityFact
 
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(numberOfBytes);
 
-        const length = numberOfBytes - 1;
-
-        let shiftedValue = value;
-
-        for (let i = 0; i < length; i += 1) {
-            dataView.setUint8(i, (shiftedValue >> 7) | 0x80); // tslint:disable-line:no-bitwise
-
-            shiftedValue &= 0x7F; // tslint:disable-line:no-bitwise
+        for (let i = 1; i < numberOfBytes; i += 1) {
+            dataView.setUint8(numberOfBytes - 1 - i, ((value >> (i * 7)) & 0x7F) | 0x80); // tslint:disable-line:no-bitwise
         }
 
-        dataView.setUint8(numberOfBytes - 1, shiftedValue);
+        dataView.setUint8(numberOfBytes - 1, value & 0x7F); // tslint:disable-line:no-bitwise
 
         return arrayBuffer;
     };
