@@ -5,7 +5,8 @@ import { joinArrayBuffers } from './functions/join-array-buffers';
 
 export * from './types';
 
-const writeVariableLengthQuantity = createWriteVariableLengthQuantity(createArrayBufferWithDataView);
+export const writeVariableLengthQuantity = createWriteVariableLengthQuantity(createArrayBufferWithDataView);
+
 const encodeMidiEvent = createEncodeMidiEvent(createArrayBufferWithDataView, joinArrayBuffers, writeVariableLengthQuantity);
 
 export { encodeMidiEvent as encode };
