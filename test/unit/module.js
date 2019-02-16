@@ -30,6 +30,12 @@ describe('module', () => {
             expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 47, 0 ]);
         });
 
+        it('should encode a instrument name event', () => {
+            const arrayBuffer = encode({ delta: 0, instrumentName: 'Steinway Grand Piano' });
+
+            expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 4, 20, 83, 116, 101, 105, 110, 119, 97, 121, 32, 71, 114, 97, 110, 100, 32, 80, 105, 97, 110, 111 ]);
+        });
+
         it('should encode a key signature event', () => {
             const arrayBuffer = encode({ keySignature: { key: 15, scale: 34 } });
 
