@@ -18,6 +18,12 @@ describe('module', () => {
             expect(arrayfy(arrayBuffer)).to.deep.equal([ 183, 23, 50 ]);
         });
 
+        it('should encode a copyright notice event', () => {
+            const arrayBuffer = encode({ copyrightNotice: '6/5/2003 by  ANTONIO LAVIANO (montevideo uruguay)', delta: 0 });
+
+            expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 2, 49, 54, 47, 53, 47, 50, 48, 48, 51, 32, 98, 121, 32, 32, 65, 78, 84, 79, 78, 73, 79, 32, 76, 65, 86, 73, 65, 78, 79, 32, 40, 109, 111, 110, 116, 101, 118, 105, 100, 101, 111, 32, 117, 114, 117, 103, 117, 97, 121, 41 ]);
+        });
+
         it('should encode an end of track event', () => {
             const arrayBuffer = encode({ endOfTrack: true });
 
