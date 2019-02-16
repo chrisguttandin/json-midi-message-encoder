@@ -78,6 +78,12 @@ describe('module', () => {
             expect(arrayfy(arrayBuffer)).to.deep.equal([ 193, 65 ]);
         });
 
+        it('should encode a sequencer specific data event', () => {
+            const arrayBuffer = encode({ delta: 0, sequencerSpecificData: '000041' });
+
+            expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 127, 3, 0, 0, 65 ]);
+        });
+
         it('should encode a set tempo event', () => {
             const arrayBuffer = encode({ setTempo: { microsecondsPerBeat: 500000 } });
 

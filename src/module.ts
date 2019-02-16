@@ -11,6 +11,7 @@ import { isMidiNoteOffEvent } from './guards/midi-note-off-event';
 import { isMidiNoteOnEvent } from './guards/midi-note-on-event';
 import { isMidiPitchBendEvent } from './guards/midi-pitch-bend-event';
 import { isMidiProgramChangeEvent } from './guards/midi-prorgam-change-event';
+import { isMidiSequencerSpecificEvent } from './guards/midi-sequencer-specific-event';
 import { isMidiSetTempoEvent } from './guards/midi-set-tempo-event';
 import { isMidiSmpteOffsetEvent } from './guards/midi-smpte-offset-event';
 import { isMidiSysexEvent } from './guards/midi-sysex-event';
@@ -172,6 +173,30 @@ export const encode = (event: TMidiEvent) => {
         dataView.setUint8(1, event.programChange.programNumber);
 
         return arrayBuffer;
+    }
+
+    if (isMidiSequencerSpecificEvent(event)) {
+        const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
+
+        // Write an eventTypeByte with a value of 0xFF.
+        dataView.setUint8(0, 0xFF);
+        // Write a metaTypeByte with a value of 0x7F.
+        dataView.setUint8(1, 0x7F);
+
+        const sequencerSpecificDataLength = event.sequencerSpecificData.length / 2;
+
+        const sequencerSpecificDataLengthArrayBuffer = writeVariableLengthQuantity(sequencerSpecificDataLength);
+
+        const {
+            arrayBuffer: sequencerSpecificDataArrayBuffer,
+            dataView: sequencerSpecificDataDataView
+        } = createArrayBufferWithDataView(sequencerSpecificDataLength);
+
+        for (let i = 0; i < event.sequencerSpecificData.length; i += 2) {
+            sequencerSpecificDataDataView.setUint8(i / 2, parseInt(event.sequencerSpecificData.slice(i, i + 2), 16));
+        }
+
+        return joinArrayBuffers([ arrayBuffer, sequencerSpecificDataLengthArrayBuffer, sequencerSpecificDataArrayBuffer ]);
     }
 
     if (isMidiSetTempoEvent(event)) {
