@@ -22,6 +22,7 @@ import { TEncodeMidiEventFactory } from '../types';
 
 export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
     createArrayBufferWithDataView,
+    encodeMidiMetaEventWithText,
     joinArrayBuffers,
     writeVariableLengthQuantity
 ) => {
@@ -50,20 +51,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         }
 
         if (isMidiCopyrightNoticeEvent(event)) {
-            const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
-
-            // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
-            // Write a metaTypeByte with a value of 0x02.
-            dataView.setUint8(1, 0x02);
-
-            const textEncoder = new TextEncoder();
-
-            const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event.copyrightNotice).buffer;
-
-            const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
-
-            return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
+            return encodeMidiMetaEventWithText(event, 0x02, 'copyrightNotice');
         }
 
         if (isMidiEndOfTrackEvent(event)) {
@@ -79,20 +67,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         }
 
         if (isMidiInstrumentNameEvent(event)) {
-            const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
-
-            // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
-            // Write a metaTypeByte with a value of 0x04.
-            dataView.setUint8(1, 0x04);
-
-            const textEncoder = new TextEncoder();
-
-            const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event.instrumentName).buffer;
-
-            const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
-
-            return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
+            return encodeMidiMetaEventWithText(event, 0x04, 'instrumentName');
         }
 
         if (isMidiKeySignatureEvent(event)) {
@@ -110,37 +85,11 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         }
 
         if (isMidiLyricEvent(event)) {
-            const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
-
-            // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
-            // Write a metaTypeByte with a value of 0x05.
-            dataView.setUint8(1, 0x05);
-
-            const textEncoder = new TextEncoder();
-
-            const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event.lyric).buffer;
-
-            const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
-
-            return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
+            return encodeMidiMetaEventWithText(event, 0x05, 'lyric');
         }
 
         if (isMidiMarkerEvent(event)) {
-            const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
-
-            // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
-            // Write a metaTypeByte with a value of 0x06.
-            dataView.setUint8(1, 0x06);
-
-            const textEncoder = new TextEncoder();
-
-            const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event.marker).buffer;
-
-            const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
-
-            return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
+            return encodeMidiMetaEventWithText(event, 0x06, 'marker');
         }
 
         if (isMidiMidiPortEvent(event)) {
@@ -310,37 +259,11 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         }
 
         if (isMidiTextEvent(event)) {
-            const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
-
-            // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
-            // Write a metaTypeByte with a value of 0x01.
-            dataView.setUint8(1, 0x01);
-
-            const textEncoder = new TextEncoder();
-
-            const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event.text).buffer;
-
-            const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
-
-            return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
+            return encodeMidiMetaEventWithText(event, 0x01, 'text');
         }
 
         if (isMidiTrackNameEvent(event)) {
-            const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
-
-            // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
-            // Write a metaTypeByte with a value of 0x03.
-            dataView.setUint8(1, 0x03);
-
-            const textEncoder = new TextEncoder();
-
-            const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event.trackName).buffer;
-
-            const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
-
-            return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
+            return encodeMidiMetaEventWithText(event, 0x03, 'trackName');
         }
 
         throw new Error(`Unencodable event with a delta of "${ (<any> event).delta }".`);
