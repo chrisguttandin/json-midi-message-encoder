@@ -48,6 +48,12 @@ describe('module', () => {
             expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 5, 12, 97, 32, 102, 97, 107, 101, 32, 108, 121, 114, 105, 99 ]);
         });
 
+        it('should encode a marker event', () => {
+            const arrayBuffer = encode({ marker: 'a fake marker' });
+
+            expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 6, 13, 97, 32, 102, 97, 107, 101, 32, 109, 97, 114, 107, 101, 114 ]);
+        });
+
         it('should encode a midi port event', () => {
             const arrayBuffer = encode({ midiPort: 42 });
 

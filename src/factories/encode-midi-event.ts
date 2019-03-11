@@ -5,6 +5,7 @@ import { isMidiEndOfTrackEvent } from '../guards/midi-end-of-track-event';
 import { isMidiInstrumentNameEvent } from '../guards/midi-instrument-name-event';
 import { isMidiKeySignatureEvent } from '../guards/midi-key-signature-event';
 import { isMidiLyricEvent } from '../guards/midi-lyric-event';
+import { isMidiMarkerEvent } from '../guards/midi-marker-event';
 import { isMidiMidiPortEvent } from '../guards/midi-midi-port-event';
 import { isMidiNoteOffEvent } from '../guards/midi-note-off-event';
 import { isMidiNoteOnEvent } from '../guards/midi-note-on-event';
@@ -119,6 +120,23 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             const textEncoder = new TextEncoder();
 
             const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event.lyric).buffer;
+
+            const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
+
+            return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
+        }
+
+        if (isMidiMarkerEvent(event)) {
+            const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
+
+            // Write an eventTypeByte with a value of 0xFF.
+            dataView.setUint8(0, 0xFF);
+            // Write a metaTypeByte with a value of 0x06.
+            dataView.setUint8(1, 0x06);
+
+            const textEncoder = new TextEncoder();
+
+            const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event.marker).buffer;
 
             const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
 
