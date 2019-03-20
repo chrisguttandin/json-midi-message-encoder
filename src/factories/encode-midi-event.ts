@@ -11,6 +11,7 @@ import { isMidiNoteOffEvent } from '../guards/midi-note-off-event';
 import { isMidiNoteOnEvent } from '../guards/midi-note-on-event';
 import { isMidiPitchBendEvent } from '../guards/midi-pitch-bend-event';
 import { isMidiProgramChangeEvent } from '../guards/midi-program-change-event';
+import { isMidiProgramNameEvent } from '../guards/midi-program-name-event';
 import { isMidiSequencerSpecificEvent } from '../guards/midi-sequencer-specific-event';
 import { isMidiSetTempoEvent } from '../guards/midi-set-tempo-event';
 import { isMidiSmpteOffsetEvent } from '../guards/midi-smpte-offset-event';
@@ -142,6 +143,10 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             dataView.setUint8(1, event.programChange.programNumber);
 
             return arrayBuffer;
+        }
+
+        if (isMidiProgramNameEvent(event)) {
+            return encodeMidiMetaEventWithText(event, 0x08, 'programName');
         }
 
         if (isMidiSequencerSpecificEvent(event)) {

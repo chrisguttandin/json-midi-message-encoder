@@ -84,6 +84,12 @@ describe('module', () => {
             expect(arrayfy(arrayBuffer)).to.deep.equal([ 193, 65 ]);
         });
 
+        it('should encode a program name event', () => {
+            const arrayBuffer = encode({ programName: 'a fake program name' });
+
+            expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 8, 19, 97, 32, 102, 97, 107, 101, 32, 112, 114, 111, 103, 114, 97, 109, 32, 110, 97, 109, 101 ]);
+        });
+
         it('should encode a sequencer specific data event', () => {
             const arrayBuffer = encode({ delta: 0, sequencerSpecificData: '000041' });
 
