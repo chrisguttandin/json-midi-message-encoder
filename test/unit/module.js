@@ -31,7 +31,7 @@ describe('module', () => {
         });
 
         it('should encode a instrument name event', () => {
-            const arrayBuffer = encode({ delta: 0, instrumentName: 'Steinway Grand Piano' });
+            const arrayBuffer = encode({ instrumentName: 'Steinway Grand Piano' });
 
             expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 4, 20, 83, 116, 101, 105, 110, 119, 97, 121, 32, 71, 114, 97, 110, 100, 32, 80, 105, 97, 110, 111 ]);
         });
@@ -91,7 +91,7 @@ describe('module', () => {
         });
 
         it('should encode a sequencer specific data event', () => {
-            const arrayBuffer = encode({ delta: 0, sequencerSpecificData: '000041' });
+            const arrayBuffer = encode({ sequencerSpecificData: '000041' });
 
             expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 127, 3, 0, 0, 65 ]);
         });
