@@ -150,6 +150,12 @@ describe('module', () => {
             expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 3, 17, 97, 32, 102, 97, 107, 101, 32, 116, 114, 97, 99, 107, 32, 110, 97, 109, 101 ]);
         });
 
+        it('should encode an unknown text event', () => {
+            const arrayBuffer = encode({ metaTypeByte: '0C', text: 'a fake text' });
+
+            expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 12, 11, 97, 32, 102, 97, 107, 101, 32, 116, 101, 120, 116 ]);
+        });
+
     });
 
 });

@@ -19,6 +19,7 @@ import { isMidiSysexEvent } from '../guards/midi-sysex-event';
 import { isMidiTextEvent } from '../guards/midi-text-event';
 import { isMidiTimeSignatureEvent } from '../guards/midi-time-signature-event';
 import { isMidiTrackNameEvent } from '../guards/midi-track-name-event';
+import { isMidiUnknownTextEvent } from '../guards/midi-unknown-text-event';
 import { TEncodeMidiEventFactory } from '../types';
 
 export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
@@ -261,6 +262,14 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             dataView.setUint8(6, event.timeSignature.thirtyseconds);
 
             return arrayBuffer;
+        }
+
+        /*
+         * @todo This needs to be before isMidiTextEvent() because otherwise TypeScript gets confused to believe that isMidiTextEvent()
+         * will handle unknown text events as well.
+         */
+        if (isMidiUnknownTextEvent(event)) {
+            return encodeMidiMetaEventWithText(event, parseInt(event.metaTypeByte, 16), 'text');
         }
 
         if (isMidiTextEvent(event)) {
