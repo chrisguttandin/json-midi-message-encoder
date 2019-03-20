@@ -10,7 +10,7 @@ import { isMidiMidiPortEvent } from '../guards/midi-midi-port-event';
 import { isMidiNoteOffEvent } from '../guards/midi-note-off-event';
 import { isMidiNoteOnEvent } from '../guards/midi-note-on-event';
 import { isMidiPitchBendEvent } from '../guards/midi-pitch-bend-event';
-import { isMidiProgramChangeEvent } from '../guards/midi-prorgam-change-event';
+import { isMidiProgramChangeEvent } from '../guards/midi-program-change-event';
 import { isMidiSequencerSpecificEvent } from '../guards/midi-sequencer-specific-event';
 import { isMidiSetTempoEvent } from '../guards/midi-set-tempo-event';
 import { isMidiSmpteOffsetEvent } from '../guards/midi-smpte-offset-event';
