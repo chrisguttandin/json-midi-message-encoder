@@ -5,6 +5,7 @@ import { isMidiCopyrightNoticeEvent } from '../guards/midi-copyright-notice-even
 import { isMidiDeviceNameEvent } from '../guards/midi-device-name-event';
 import { isMidiEndOfTrackEvent } from '../guards/midi-end-of-track-event';
 import { isMidiInstrumentNameEvent } from '../guards/midi-instrument-name-event';
+import { isMidiKeyPressureEvent } from '../guards/midi-key-pressure-event';
 import { isMidiKeySignatureEvent } from '../guards/midi-key-signature-event';
 import { isMidiLyricEvent } from '../guards/midi-lyric-event';
 import { isMidiMarkerEvent } from '../guards/midi-marker-event';
@@ -86,6 +87,15 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
 
         if (isMidiInstrumentNameEvent(event)) {
             return encodeMidiMetaEventWithText(event, 0x04, 'instrumentName');
+        }
+
+        if (isMidiKeyPressureEvent(event)) {
+            const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
+
+            dataView.setUint8(0, 0x0A | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
+            dataView.setUint8(1, event.keyPressure.pressure);
+
+            return arrayBuffer;
         }
 
         if (isMidiKeySignatureEvent(event)) {
