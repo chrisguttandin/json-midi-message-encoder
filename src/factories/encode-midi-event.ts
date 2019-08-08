@@ -1,6 +1,7 @@
 import { isMidiChannelPrefixEvent } from '../guards/midi-channel-prefix-event';
 import { isMidiControlChangeEvent } from '../guards/midi-control-change-event';
 import { isMidiCopyrightNoticeEvent } from '../guards/midi-copyright-notice-event';
+import { isMidiDeviceNameEvent } from '../guards/midi-device-name-event';
 import { isMidiEndOfTrackEvent } from '../guards/midi-end-of-track-event';
 import { isMidiInstrumentNameEvent } from '../guards/midi-instrument-name-event';
 import { isMidiKeySignatureEvent } from '../guards/midi-key-signature-event';
@@ -54,6 +55,10 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
 
         if (isMidiCopyrightNoticeEvent(event)) {
             return encodeMidiMetaEventWithText(event, 0x02, 'copyrightNotice');
+        }
+
+        if (isMidiDeviceNameEvent(event)) {
+            return encodeMidiMetaEventWithText(event, 0x09, 'deviceName');
         }
 
         if (isMidiEndOfTrackEvent(event)) {
