@@ -6,5 +6,6 @@ import { TWriteVariableLengthQuantityFunction } from './write-variable-length-qu
 export type TEncodeMidiMetaEventWithTextFactory = (
     createArrayBufferWithDataView: TCreateArrayBufferWithDataViewFunction,
     joinArrayBuffers: TJoinArrayBuffersFunction,
+    textEncoder: TextEncoder,
     writeVariableLengthQuantity: TWriteVariableLengthQuantityFunction
 ) => TEncodeMidiMetaEventWithTextFunction;

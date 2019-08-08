@@ -3,6 +3,7 @@ import { TEncodeMidiMetaEventWithTextFactory } from '../types';
 export const createEncodeMidiMetaEventWithText: TEncodeMidiMetaEventWithTextFactory = (
     createArrayBufferWithDataView,
     joinArrayBuffers,
+    textEncoder,
     writeVariableLengthQuantity
 ) => {
     return (event, metaTypeByte, key) => {
@@ -13,10 +14,7 @@ export const createEncodeMidiMetaEventWithText: TEncodeMidiMetaEventWithTextFact
         // Write a metaTypeByte with the given value.
         dataView.setUint8(1, metaTypeByte);
 
-        const textEncoder = new TextEncoder();
-
-        const textArrayBuffer = <ArrayBuffer> textEncoder.encode(event[key]).buffer;
-
+        const textArrayBuffer = textEncoder.encode(event[key]).buffer;
         const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
 
         return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);

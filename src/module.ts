@@ -10,7 +10,7 @@ export const writeVariableLengthQuantity = createWriteVariableLengthQuantity(cre
 
 const encodeMidiEvent = createEncodeMidiEvent(
     createArrayBufferWithDataView,
-    createEncodeMidiMetaEventWithText(createArrayBufferWithDataView, joinArrayBuffers, writeVariableLengthQuantity),
+    createEncodeMidiMetaEventWithText(createArrayBufferWithDataView, joinArrayBuffers, new TextEncoder(), writeVariableLengthQuantity),
     joinArrayBuffers,
     writeVariableLengthQuantity
 );
