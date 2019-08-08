@@ -12,6 +12,12 @@ describe('module', () => {
             expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 32, 1, 12 ]);
         });
 
+        it('should encode a channel pressure event', () => {
+            const arrayBuffer = encode({ channel: 4, channelPressure: { noteNumber: 54, pressure: 46 } });
+
+            expect(arrayfy(arrayBuffer)).to.deep.equal([ 13, 54, 46 ]);
+        });
+
         it('should encode a control change event', () => {
             const arrayBuffer = encode({ channel: 7, controlChange: { type: 23, value: 50 } });
 

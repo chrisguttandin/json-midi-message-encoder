@@ -1,4 +1,5 @@
 import { isMidiChannelPrefixEvent } from '../guards/midi-channel-prefix-event';
+import { isMidiChannelPressureEvent } from '../guards/midi-channel-pressure-event';
 import { isMidiControlChangeEvent } from '../guards/midi-control-change-event';
 import { isMidiCopyrightNoticeEvent } from '../guards/midi-copyright-notice-event';
 import { isMidiDeviceNameEvent } from '../guards/midi-device-name-event';
@@ -39,6 +40,16 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             dataView.setUint8(1, 0x20);
             dataView.setUint8(2, 1);
             dataView.setUint8(3, event.channelPrefix);
+
+            return arrayBuffer;
+        }
+
+        if (isMidiChannelPressureEvent(event)) {
+            const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
+
+            dataView.setUint8(0, 0x0D | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
+            dataView.setUint8(1, event.channelPressure.noteNumber);
+            dataView.setUint8(2, event.channelPressure.pressure);
 
             return arrayBuffer;
         }
