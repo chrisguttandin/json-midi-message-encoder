@@ -4,7 +4,11 @@ import { createWriteVariableLengthQuantity } from './factories/write-variable-le
 import { createArrayBufferWithDataView } from './functions/create-array-buffer-with-data-view';
 import { joinArrayBuffers } from './functions/join-array-buffers';
 
-export * from './types';
+/*
+ * @todo Explicitly referencing the barrel file seems to be necessary when enabling the
+ * isolatedModules compiler option.
+ */
+export * from './types/index';
 
 export const writeVariableLengthQuantity = createWriteVariableLengthQuantity(createArrayBufferWithDataView);
 
