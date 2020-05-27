@@ -208,9 +208,9 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             // Write a metaTypeByte with a value of 0x51.
             dataView.setUint8(1, 0x51);
             dataView.setUint8(2, 3);
-            dataView.setUint8(3, event.setTempo.microsecondsPerBeat >> 16); // tslint:disable-line:no-bitwise
-            dataView.setUint8(4, event.setTempo.microsecondsPerBeat >> 8); // tslint:disable-line:no-bitwise
-            dataView.setUint8(5, event.setTempo.microsecondsPerBeat);
+            dataView.setUint8(3, event.setTempo.microsecondsPerQuarter >> 16); // tslint:disable-line:no-bitwise
+            dataView.setUint8(4, event.setTempo.microsecondsPerQuarter >> 8); // tslint:disable-line:no-bitwise
+            dataView.setUint8(5, event.setTempo.microsecondsPerQuarter);
 
             return arrayBuffer;
         }

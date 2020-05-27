@@ -115,7 +115,7 @@ describe('module', () => {
         });
 
         it('should encode a set tempo event', () => {
-            const arrayBuffer = encode({ setTempo: { microsecondsPerBeat: 500000 } });
+            const arrayBuffer = encode({ setTempo: { microsecondsPerQuarter: 500000 } });
 
             expect(arrayfy(arrayBuffer)).to.deep.equal([ 255, 81, 3, 7, 161, 32 ]);
         });
