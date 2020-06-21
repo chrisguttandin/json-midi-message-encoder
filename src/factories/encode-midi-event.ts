@@ -36,7 +36,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(4);
 
             // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
+            dataView.setUint8(0, 0xff);
             // Write a metaTypeByte with a value of 0x20.
             dataView.setUint8(1, 0x20);
             dataView.setUint8(2, 1);
@@ -48,7 +48,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         if (isMidiChannelPressureEvent(event)) {
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
-            dataView.setUint8(0, 0x0D | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
+            dataView.setUint8(0, 0x0d | (event.channel & 0xf)); // tslint:disable-line:no-bitwise
             dataView.setUint8(1, event.channelPressure.noteNumber);
             dataView.setUint8(2, event.channelPressure.pressure);
 
@@ -58,7 +58,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         if (isMidiControlChangeEvent(event)) {
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
-            dataView.setUint8(0, 0xB0 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
+            dataView.setUint8(0, 0xb0 | (event.channel & 0xf)); // tslint:disable-line:no-bitwise
             dataView.setUint8(1, event.controlChange.type);
             dataView.setUint8(2, event.controlChange.value);
 
@@ -77,9 +77,9 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
             // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
+            dataView.setUint8(0, 0xff);
             // Write a metaTypeByte with a value of 0x2F.
-            dataView.setUint8(1, 0x2F);
+            dataView.setUint8(1, 0x2f);
             dataView.setUint8(2, 0);
 
             return arrayBuffer;
@@ -92,7 +92,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         if (isMidiKeyPressureEvent(event)) {
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
 
-            dataView.setUint8(0, 0x0A | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
+            dataView.setUint8(0, 0x0a | (event.channel & 0xf)); // tslint:disable-line:no-bitwise
             dataView.setUint8(1, event.keyPressure.pressure);
 
             return arrayBuffer;
@@ -102,7 +102,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(5);
 
             // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
+            dataView.setUint8(0, 0xff);
             // Write a metaTypeByte with a value of 0x59.
             dataView.setUint8(1, 0x59);
             dataView.setUint8(2, 2);
@@ -124,7 +124,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(4);
 
             // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
+            dataView.setUint8(0, 0xff);
             // Write a metaTypeByte with a value of 0x21.
             dataView.setUint8(1, 0x21);
             dataView.setUint8(2, 1);
@@ -136,7 +136,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         if (isMidiNoteOffEvent(event)) {
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
-            dataView.setUint8(0, 0x80 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
+            dataView.setUint8(0, 0x80 | (event.channel & 0xf)); // tslint:disable-line:no-bitwise
             dataView.setUint8(1, event.noteOff.noteNumber);
             dataView.setUint8(2, event.noteOff.velocity);
 
@@ -146,7 +146,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         if (isMidiNoteOnEvent(event)) {
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
-            dataView.setUint8(0, 0x90 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
+            dataView.setUint8(0, 0x90 | (event.channel & 0xf)); // tslint:disable-line:no-bitwise
             dataView.setUint8(1, event.noteOn.noteNumber);
             dataView.setUint8(2, event.noteOn.velocity);
 
@@ -156,8 +156,8 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         if (isMidiPitchBendEvent(event)) {
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
-            dataView.setUint8(0, 0xE0 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
-            dataView.setUint8(1, event.pitchBend & 0x7F); // tslint:disable-line:no-bitwise
+            dataView.setUint8(0, 0xe0 | (event.channel & 0xf)); // tslint:disable-line:no-bitwise
+            dataView.setUint8(1, event.pitchBend & 0x7f); // tslint:disable-line:no-bitwise
             dataView.setUint8(2, event.pitchBend >> 7); // tslint:disable-line:no-bitwise
 
             return arrayBuffer;
@@ -166,7 +166,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         if (isMidiProgramChangeEvent(event)) {
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
 
-            dataView.setUint8(0, 0xC0 | (event.channel & 0xF)); // tslint:disable-line:no-bitwise
+            dataView.setUint8(0, 0xc0 | (event.channel & 0xf)); // tslint:disable-line:no-bitwise
             dataView.setUint8(1, event.programChange.programNumber);
 
             return arrayBuffer;
@@ -180,9 +180,9 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
 
             // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
+            dataView.setUint8(0, 0xff);
             // Write a metaTypeByte with a value of 0x7F.
-            dataView.setUint8(1, 0x7F);
+            dataView.setUint8(1, 0x7f);
 
             const sequencerSpecificDataLength = event.sequencerSpecificData.length / 2;
 
@@ -197,14 +197,14 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
                 sequencerSpecificDataDataView.setUint8(i / 2, parseInt(event.sequencerSpecificData.slice(i, i + 2), 16));
             }
 
-            return joinArrayBuffers([ arrayBuffer, sequencerSpecificDataLengthArrayBuffer, sequencerSpecificDataArrayBuffer ]);
+            return joinArrayBuffers([arrayBuffer, sequencerSpecificDataLengthArrayBuffer, sequencerSpecificDataArrayBuffer]);
         }
 
         if (isMidiSetTempoEvent(event)) {
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(6);
 
             // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
+            dataView.setUint8(0, 0xff);
             // Write a metaTypeByte with a value of 0x51.
             dataView.setUint8(1, 0x51);
             dataView.setUint8(2, 3);
@@ -233,7 +233,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             }
 
             // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
+            dataView.setUint8(0, 0xff);
             // Write a metaTypeByte with a value of 0x54.
             dataView.setUint8(1, 0x54);
             dataView.setUint8(2, 5);
@@ -250,7 +250,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             const { arrayBuffer, dataView } = createArrayBufferWithDataView(1);
 
             // Write an eventTypeByte with a value of 0xF0.
-            dataView.setUint8(0, 0xF0);
+            dataView.setUint8(0, 0xf0);
 
             const sysexLength = event.sysex.length / 2;
 
@@ -262,7 +262,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
                 sysexDataView.setUint8(i / 2, parseInt(event.sysex.slice(i, i + 2), 16));
             }
 
-            return joinArrayBuffers([ arrayBuffer, sysexLengthArrayBuffer, sysexArrayBuffer ]);
+            return joinArrayBuffers([arrayBuffer, sysexLengthArrayBuffer, sysexArrayBuffer]);
         }
 
         if (isMidiTimeSignatureEvent(event)) {
@@ -278,7 +278,7 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             }
 
             // Write an eventTypeByte with a value of 0xFF.
-            dataView.setUint8(0, 0xFF);
+            dataView.setUint8(0, 0xff);
             // Write a metaTypeByte with a value of 0x58.
             dataView.setUint8(1, 0x58);
             dataView.setUint8(2, 4);
@@ -306,6 +306,6 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
             return encodeMidiMetaEventWithText(event, 0x03, 'trackName');
         }
 
-        throw new Error(`Unencodable event with a delta of "${ (<any> event).delta }".`);
+        throw new Error(`Unencodable event with a delta of "${(<any>event).delta}".`);
     };
 };

@@ -1,5 +1,5 @@
 import { IMidiNoteOffEvent, TMidiEvent } from 'midi-json-parser-worker';
 
 export const isMidiNoteOffEvent = (event: TMidiEvent): event is IMidiNoteOffEvent => {
-    return ((<IMidiNoteOffEvent> event).noteOff !== undefined);
+    return (<IMidiNoteOffEvent>event).noteOff !== undefined;
 };

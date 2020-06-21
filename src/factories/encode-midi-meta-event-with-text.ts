@@ -10,13 +10,13 @@ export const createEncodeMidiMetaEventWithText: TEncodeMidiMetaEventWithTextFact
         const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
 
         // Write an eventTypeByte with a value of 0xFF.
-        dataView.setUint8(0, 0xFF);
+        dataView.setUint8(0, 0xff);
         // Write a metaTypeByte with the given value.
         dataView.setUint8(1, metaTypeByte);
 
         const textArrayBuffer = textEncoder.encode(event[key]).buffer;
         const textLengthArrayBuffer = writeVariableLengthQuantity(textArrayBuffer.byteLength);
 
-        return joinArrayBuffers([ arrayBuffer, textLengthArrayBuffer, textArrayBuffer ]);
+        return joinArrayBuffers([arrayBuffer, textLengthArrayBuffer, textArrayBuffer]);
     };
 };
