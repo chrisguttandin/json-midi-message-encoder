@@ -46,11 +46,10 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         }
 
         if (isMidiChannelPressureEvent(event)) {
-            const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
+            const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
 
             dataView.setUint8(0, 0x0d | (event.channel & 0xf)); // tslint:disable-line:no-bitwise
-            dataView.setUint8(1, event.channelPressure.noteNumber);
-            dataView.setUint8(2, event.channelPressure.pressure);
+            dataView.setUint8(1, event.channelPressure.pressure);
 
             return arrayBuffer;
         }
@@ -90,10 +89,11 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
         }
 
         if (isMidiKeyPressureEvent(event)) {
-            const { arrayBuffer, dataView } = createArrayBufferWithDataView(2);
+            const { arrayBuffer, dataView } = createArrayBufferWithDataView(3);
 
             dataView.setUint8(0, 0x0a | (event.channel & 0xf)); // tslint:disable-line:no-bitwise
-            dataView.setUint8(1, event.keyPressure.pressure);
+            dataView.setUint8(1, event.keyPressure.noteNumber);
+            dataView.setUint8(2, event.keyPressure.pressure);
 
             return arrayBuffer;
         }

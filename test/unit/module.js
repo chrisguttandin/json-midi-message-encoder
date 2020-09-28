@@ -11,9 +11,9 @@ describe('module', () => {
         });
 
         it('should encode a channel pressure event', () => {
-            const arrayBuffer = encode({ channel: 4, channelPressure: { noteNumber: 54, pressure: 46 } });
+            const arrayBuffer = encode({ channel: 4, channelPressure: { pressure: 46 } });
 
-            expect(arrayfy(arrayBuffer)).to.deep.equal([13, 54, 46]);
+            expect(arrayfy(arrayBuffer)).to.deep.equal([13, 46]);
         });
 
         it('should encode a control change event', () => {
@@ -148,9 +148,9 @@ describe('module', () => {
         });
 
         it('should encode a key pressure event', () => {
-            const arrayBuffer = encode({ channel: 4, keyPressure: { pressure: 46 } });
+            const arrayBuffer = encode({ channel: 4, keyPressure: { noteNumber: 54, pressure: 46 } });
 
-            expect(arrayfy(arrayBuffer)).to.deep.equal([14, 46]);
+            expect(arrayfy(arrayBuffer)).to.deep.equal([14, 54, 46]);
         });
 
         it('should encode a key signature event', () => {
