@@ -59,12 +59,6 @@
         "src/"
     ],
     "homepage": "https://github.com/chrisguttandin/json-midi-message-encoder",
-    "husky": {
-        "hooks": {
-            "commit-msg": "commitlint --edit --extends @commitlint/config-angular",
-            "pre-commit": "pretty-quick --config config/prettier/config.json --staged && grunt lint"
-        }
-    },
     "keywords": [
         "MIDI"
     ],
@@ -77,6 +71,7 @@
         "url": "https://github.com/chrisguttandin/json-midi-message-encoder.git"
     },
     "scripts": {
+        "prepare": "husky install",
         "prepublishOnly": "grunt build",
         "test": "grunt lint && grunt test"
     },
