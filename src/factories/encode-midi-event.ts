@@ -2,6 +2,7 @@ import { isMidiChannelPrefixEvent } from '../guards/midi-channel-prefix-event';
 import { isMidiChannelPressureEvent } from '../guards/midi-channel-pressure-event';
 import { isMidiControlChangeEvent } from '../guards/midi-control-change-event';
 import { isMidiCopyrightNoticeEvent } from '../guards/midi-copyright-notice-event';
+import { isMidiCuePointEvent } from '../guards/midi-cue-point-event';
 import { isMidiDeviceNameEvent } from '../guards/midi-device-name-event';
 import { isMidiEndOfTrackEvent } from '../guards/midi-end-of-track-event';
 import { isMidiInstrumentNameEvent } from '../guards/midi-instrument-name-event';
@@ -66,6 +67,10 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
 
         if (isMidiCopyrightNoticeEvent(event)) {
             return encodeMidiMetaEventWithText(event, 0x02, 'copyrightNotice');
+        }
+
+        if (isMidiCuePointEvent(event)) {
+            return encodeMidiMetaEventWithText(event, 0x07, 'cuePoint');
         }
 
         if (isMidiDeviceNameEvent(event)) {
@@ -188,10 +193,8 @@ export const createEncodeMidiEvent: TEncodeMidiEventFactory = (
 
             const sequencerSpecificDataLengthArrayBuffer = writeVariableLengthQuantity(sequencerSpecificDataLength);
 
-            const {
-                arrayBuffer: sequencerSpecificDataArrayBuffer,
-                dataView: sequencerSpecificDataDataView
-            } = createArrayBufferWithDataView(sequencerSpecificDataLength);
+            const { arrayBuffer: sequencerSpecificDataArrayBuffer, dataView: sequencerSpecificDataDataView } =
+                createArrayBufferWithDataView(sequencerSpecificDataLength);
 
             for (let i = 0; i < event.sequencerSpecificData.length; i += 2) {
                 sequencerSpecificDataDataView.setUint8(i / 2, parseInt(event.sequencerSpecificData.slice(i, i + 2), 16));
