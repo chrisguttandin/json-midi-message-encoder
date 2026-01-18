@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { encode } from '../../src/module';
 
 const arrayfy = (arrayBuffer) => Array.from(new Uint8Array(arrayBuffer));

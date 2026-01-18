@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from 'vitest';
 import { createArrayBufferWithDataView } from '../../../src/functions/create-array-buffer-with-data-view';
 import { createWriteVariableLengthQuantity } from '../../../src/factories/write-variable-length-quantity';
 
@@ -6,7 +7,9 @@ const arrayfy = (arrayBuffer) => Array.from(new Uint8Array(arrayBuffer));
 describe('writeVariableLengthQuantity()', () => {
     let writeVariableLengthQuantity;
 
-    beforeEach(() => (writeVariableLengthQuantity = createWriteVariableLengthQuantity(createArrayBufferWithDataView)));
+    beforeEach(() => {
+        writeVariableLengthQuantity = createWriteVariableLengthQuantity(createArrayBufferWithDataView);
+    });
 
     it('should encode a number which fits into a single byte', () => {
         const value = Math.floor(Math.random() * 128);
